@@ -106,7 +106,8 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "mptt",
-    "ckeditor"
+    "ckeditor",
+    "sorl.thumbnail"
 ]
 
 LOCAL_APPS = [
