@@ -120,7 +120,10 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "birzum.users.apps.UsersConfig",
-    "birzum.apps.products.apps.ProductsConfig"
+    "birzum.apps.products.apps.ProductsConfig",
+    "birzum.apps.order.apps.OrderConfig",
+    "birzum.apps.smallapps.compare.apps.CompareConfig",
+    "birzum.apps.smallapps.whishlist.apps.WhishlistConfig"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -318,7 +321,10 @@ SOCIALACCOUNT_ADAPTER = "birzum.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+# cart configs
+CART_SESSION_ID = "cart"
 
+#-------------------------------------------------
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CKEDITOR_FILENAME_GENERATOR = 'config.utils.get_filename'

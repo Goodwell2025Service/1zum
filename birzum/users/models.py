@@ -16,14 +16,6 @@ class User(AbstractUser):
 
     """Default user for birZum ecommerce system."""
 
-    phone = models.CharField(_("Телефон"), max_length=50, blank=True, null=True)
-    birth_date = models.DateField(_("Birth date"), blank=True, default=timezone.now)
-    gender = models.CharField(
-        _("Gender"),
-        choices=GenderChoices.choices,
-        default=GenderChoices.HIDDEN,
-        max_length=55)
-
     def get_absolute_url(self):
         """Get url for user's detail view.
 
@@ -39,3 +31,31 @@ class User(AbstractUser):
         Return first and last names if user is individual, organization_name otherwise
         """
         return f"{self.first_name} {self.last_name}"
+
+
+class Profile(models.Model):
+    # foydalanuvchi
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, related_name="profile", null=True)
+
+    # manzil malumotlar
+    address = models.CharField(_("Manzil"), max_length=255, blank=True)
+    country = models.CharField(_("Davlat"), max_length=255, blank=True)
+    region = models.CharField(_("Viloyat"), max_length=100, blank=True)
+    district = models.CharField(_("Tuman/Shahar"), max_length=100, blank=True)
+    street = models.CharField(_("Ko'cha"), max_length=55, blank=True)
+    house = models.CharField(_("Massiv, Daha, Kvarta, uy nomeri"), max_length=255, blank=True)
+    postcode = models.PositiveIntegerField(_("Manzil"), blank=True)
+    phone = models.CharField(_("Telefon"), max_length=50, blank=True, null=True)
+    birth_date = models.DateField(_("Tug'ilgan sana"), blank=True, default=timezone.now)
+    gender = models.CharField(
+        _("Jins"),
+        choices=GenderChoices.choices,
+        default=GenderChoices.HIDDEN,
+        max_length=55)
+
+    class Meta:
+        verbose_name = _("Profil")
+        verbose_name_plural = _("Foydalanuvchilar Profillari")
+
+    def __str__(self) -> str:
+        return self.user.username
