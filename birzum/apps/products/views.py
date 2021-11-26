@@ -43,6 +43,10 @@ class ProductDetail(DetailView):
     model = Product
     # pk_url_kwarg = 'slug'
     slug_field = 'slug'
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['categories'] = Category.objects.select_related('parent').all()
+        return ctx
 
 
 product_detail_view = ProductDetail.as_view()

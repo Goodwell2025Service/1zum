@@ -27,7 +27,7 @@ def cart_add(request, id):
 
         # tekshiruv tugagandan song cartaga mahsulotni qo'shib yuboramiz
         cart.add(product=obj, quantity=count, update_quantity=False)
-        
+
         return JsonResponse({"success": True, "message": success_message}, safe=False)
 
     return JsonResponse({"success": False, "message": fail_message}, safe=False)
