@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 from model_utils.models import TimeStampedModel
 
 
@@ -12,9 +13,18 @@ class AboutUs(TimeStampedModel):
 
     # xizmat turlari bo'limi
     show_features = models.BooleanField(_("Xizlat turlari haqida malumotni ko'rsatish"), default=True)
-    first_feature = models.TextField(_("Birinchi xizmat turi"), max_length=512)
-    second_feature = models.TextField(_("Uchinchi xizmat turi"), max_length=512)
-    third_feature = models.TextField(_("Ikkinchi xizmat turi"), max_length=512)
+    first_feature = models.TextField(
+        _("Birinchi xizmat turi"),
+        help_text=_("Xaridorlarga xizmat ko'rsatish haqida"),
+        max_length=512)
+    second_feature = models.TextField(
+        _("Uchinchi xizmat turi"),
+        help_text=_("Onlayn qo'llab quvvatlash haqida"),
+        max_length=512)
+    third_feature = models.TextField(
+        _("Ikkinchi xizmat turi"),
+        help_text=_("Xarid bo'yicha konsultatsiya haqida"),
+        max_length=512)
 
     feature_image = models.ImageField(_("Xizmat turlariga oid rasm"), blank=True)
 
@@ -103,3 +113,20 @@ class Leaders(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+
+class Message(TimeStampedModel):
+    name = models.CharField(_("To'liq ism"), max_length=255)
+    phone = models.CharField(_("Telefon raqam"), max_length=13)
+    message = models.TextField(_("Xabar"))
+
+    class Meta:
+        verbose_name = _("xabar")
+        verbose_name_plural = _("Xabarlar")
+    
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("company:contact")
+    
