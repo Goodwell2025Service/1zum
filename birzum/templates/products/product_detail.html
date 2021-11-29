@@ -54,48 +54,15 @@
                                     }
                                 }">
                                     <div class="swiper-wrapper row cols-1 gutter-no">
-                                        <div class="swiper-slide">
-                                            <figure class="product-image">
-                                                <img src="assets/images/products/default/1-800x900.jpg"
-                                                    data-zoom-image="assets/images/products/default/1-800x900.jpg"
-                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
-                                            </figure>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <figure class="product-image">
-                                                <img src="assets/images/products/default/2-800x900.jpg"
-                                                    data-zoom-image="assets/images/products/default/2-800x900.jpg"
-                                                    alt="Electronics Black Wrist Watch" width="488" height="549">
-                                            </figure>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <figure class="product-image">
-                                                <img src="assets/images/products/default/3-800x900.jpg"
-                                                    data-zoom-image="assets/images/products/default/3-800x900.jpg"
-                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
-                                            </figure>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <figure class="product-image">
-                                                <img src="assets/images/products/default/4-800x900.jpg"
-                                                    data-zoom-image="assets/images/products/default/4-800x900.jpg"
-                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
-                                            </figure>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <figure class="product-image">
-                                                <img src="assets/images/products/default/5-800x900.jpg"
-                                                    data-zoom-image="assets/images/products/default/5-800x900.jpg"
-                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
-                                            </figure>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <figure class="product-image">
-                                                <img src="assets/images/products/default/6-800x900.jpg"
-                                                    data-zoom-image="assets/images/products/default/6-800x900.jpg"
-                                                    alt="Electronics Black Wrist Watch" width="800" height="900">
-                                            </figure>
-                                        </div>
+                                        {% for image in images %}
+                                            <div class="swiper-slide">
+                                                <figure class="product-image">
+                                                    <img src="/media/{{ image.image }}"
+                                                        data-zoom-image="/media/{{ image.image }}"
+                                                        alt="{{ object.title }}" width="800" height="900">
+                                                </figure>
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                     <button class="swiper-button-next"></button>
                                     <button class="swiper-button-prev"></button>
@@ -108,30 +75,12 @@
                                     }
                                 }">
                                     <div class="product-thumbs swiper-wrapper row cols-4 gutter-sm">
-                                        <div class="product-thumb swiper-slide">
-                                            <img src="assets/images/products/default/1-800x900.jpg"
-                                                alt="Product Thumb" width="800" height="900">
-                                        </div>
-                                        <div class="product-thumb swiper-slide">
-                                            <img src="assets/images/products/default/2-800x900.jpg"
-                                                alt="Product Thumb" width="800" height="900">
-                                        </div>
-                                        <div class="product-thumb swiper-slide">
-                                            <img src="assets/images/products/default/3-800x900.jpg"
-                                                alt="Product Thumb" width="800" height="900">
-                                        </div>
-                                        <div class="product-thumb swiper-slide">
-                                            <img src="assets/images/products/default/4-800x900.jpg"
-                                                alt="Product Thumb" width="800" height="900">
-                                        </div>
-                                        <div class="product-thumb swiper-slide">
-                                            <img src="assets/images/products/default/5-800x900.jpg"
-                                                alt="Product Thumb" width="800" height="900">
-                                        </div>
-                                        <div class="product-thumb swiper-slide">
-                                            <img src="assets/images/products/default/6-800x900.jpg"
-                                                alt="Product Thumb" width="800" height="900">
-                                        </div>
+                                        {% for image in images %}
+                                            <div class="product-thumb swiper-slide">
+                                                <img src="/media/{{ image.image }}"
+                                                    alt="{{ object.title }}" width="800" height="900">
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                     <button class="swiper-button-next"></button>
                                     <button class="swiper-button-prev"></button>
@@ -140,16 +89,16 @@
                         </div>
                         <div class="col-md-6 mb-4 mb-md-6">
                             <div class="product-details" data-sticky-options="{'minWidth': 767}">
-                                <h1 class="product-title">Electronics Black Wrist Watch</h1>
+                                <h1 class="product-title">{{ object.title }}</h1>
                                 <div class="product-bm-wrapper">
                                     <figure class="brand">
-                                        <img src="assets/images/products/brand/brand-1.jpg" alt="Brand"
+                                        <img src="/media/{{ object.brand.icon }}" alt="{{ object.brand.name }}"
                                             width="102" height="48" />
                                     </figure>
                                     <div class="product-meta">
                                         <div class="product-categories">
                                             Category:
-                                            <span class="product-category"><a href="#">{{ categories }}</a></span>
+                                            <span class="product-category"><a href="#">{{ object.category }}</a></span>
                                         </div>
                                         <div class="product-sku">
                                             SKU: <span>MS46891340</span>
@@ -159,7 +108,7 @@
 
                                 <hr class="product-divider">
 
-                                <div class="product-price"><ins class="new-price">$40.00</ins></div>
+                                <div class="product-price"><ins class="new-price">{{ object.price }}</ins></div>
 
                                 <div class="ratings-container">
                                     <div class="ratings-full">
@@ -171,11 +120,7 @@
                                 </div>
 
                                 <div class="product-short-desc">
-                                    <ul class="list-type-check list-style-none">
-                                        <li>Ultrices eros in cursus turpis massa cursus mattis.</li>
-                                        <li>Volutpat ac tincidunt vitae semper quis lectus.</li>
-                                        <li>Aliquam id diam maecenas ultricies mi eget mauris.</li>
-                                    </ul>
+                                    {{ object.description }}
                                 </div>
 
                                 <hr class="product-divider">
@@ -217,7 +162,7 @@
                                         </div>
                                         <button class="btn btn-primary btn-cart">
                                             <i class="w-icon-cart"></i>
-                                            <span>Add to Cart</span>
+                                            <span>{% trans "Savatga qo'shish" %}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -246,7 +191,7 @@
                         </div>
                     </div>
                     <div class="frequently-bought-together mt-5">
-                        <h2 class="title title-underline">Frequently Bought Together</h2>
+                        <h2 class="title title-underline">{% trans "Shu bilan birga sotib olishmoqda" %}</h2>
                         <div class="bought-together-products row mt-8 pb-4">
                             <div class="product product-wrap text-center">
                                 <figure class="product-media">
@@ -309,35 +254,32 @@
                     <div class="tab tab-nav-boxed tab-nav-underline product-tabs">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a href="#product-tab-description" class="nav-link active">Description</a>
+                                <a href="#product-tab-description" class="nav-link active">{% trans "Mahsulot haqida" %}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#product-tab-specification" class="nav-link">Specification</a>
+                                <a href="#product-tab-specification" class="nav-link">{% trans "Xarakteristika" %}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#product-tab-vendor" class="nav-link">Vendor Info</a>
+                                <a href="#product-tab-vendor" class="nav-link">{% trans "Sotuvchi haqida" %}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#product-tab-reviews" class="nav-link">Customer Reviews (3)</a>
+                                <a href="#product-tab-reviews" class="nav-link">{% trans "Xaridorlar sharhlar" %}</a>
                             </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="product-tab-description">
                                 <div class="row mb-4">
                                     <div class="col-md-6 mb-5">
-                                        <h4 class="title tab-pane-title font-weight-bold mb-2">Detail</h4>
-                                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                            sed do eiusmod tempor incididunt arcu cursus vitae congue mauris.
-                                            Sagittis id consectetur purus ut. Tellus rutrum tellus pelle Vel
-                                            pretium lectus quam id leo in vitae turpis massa.</p>
-                                        <ul class="list-type-check">
-                                            <li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis
-                                                elit.
-                                            </li>
-                                            <li>Vivamus finibus vel mauris ut vehicula.</li>
-                                            <li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.
-                                            </li>
-                                        </ul>
+                                        <h4 class="title tab-pane-title font-weight-bold mb-2">{% trans "Tafsilotlar" %}</h4>
+                                        <p class="mb-4">{{ object.description }}</p>
+{#                                        <ul class="list-type-check">#}
+{#                                            <li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis#}
+{#                                                elit.#}
+{#                                            </li>#}
+{#                                            <li>Vivamus finibus vel mauris ut vehicula.</li>#}
+{#                                            <li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.#}
+{#                                            </li>#}
+{#                                        </ul>   #}
                                     </div>
                                     <div class="col-md-6 mb-5">
                                         <div class="banner banner-video product-video br-xs">
@@ -375,31 +317,14 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="product-tab-specification">
-                                <ul class="list-none">
-                                    <li>
-                                        <label>Model</label>
-                                        <p>Skysuite 320</p>
-                                    </li>
-                                    <li>
-                                        <label>Color</label>
-                                        <p>Black</p>
-                                    </li>
-                                    <li>
-                                        <label>Size</label>
-                                        <p>Large, Small</p>
-                                    </li>
-                                    <li>
-                                        <label>Guarantee Time</label>
-                                        <p>3 Months</p>
-                                    </li>
-                                </ul>
+                                {{ object.specs | safe }}
                             </div>
                             <div class="tab-pane" id="product-tab-vendor">
                                 <div class="row mb-3">
                                     <div class="col-md-6 mb-4">
                                         <figure class="vendor-banner br-sm">
-                                            <img src="assets/images/products/vendor-banner.jpg"
-                                                alt="Vendor Banner" width="610" height="295"
+                                            <img src="/media/{{ object.brand.icon }}"
+                                                alt="{{ object.brand.name }}" width="610" height="295"
                                                 style="background-color: #353B55;" />
                                         </figure>
                                     </div>
@@ -407,12 +332,12 @@
                                         <div class="vendor-user">
                                             <figure class="vendor-logo mr-4">
                                                 <a href="#">
-                                                    <img src="assets/images/products/vendor-logo.jpg"
+                                                    <img src="/media/{{ object.brand.icon }}"
                                                         alt="Vendor Logo" width="80" height="80" />
                                                 </a>
                                             </figure>
                                             <div>
-                                                <div class="vendor-name"><a href="#">Jone Doe</a></div>
+                                                <div class="vendor-name"><a href="#">{{ object.brand.name }}</a></div>
                                                 <div class="ratings-container">
                                                     <div class="ratings-full">
                                                         <span class="ratings" style="width: 90%;"></span>
@@ -424,7 +349,7 @@
                                         </div>
                                         <ul class="vendor-info list-style-none">
                                             <li class="store-name">
-                                                <label>Store Name:</label>
+                                                <label>{% trans "Sotuvchi" %}:</label>
                                                 <span class="detail">OAIO Store</span>
                                             </li>
                                             <li class="store-address">
