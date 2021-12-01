@@ -114,7 +114,8 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "mptt",
     "ckeditor",
-    "sorl.thumbnail"
+    "sorl.thumbnail",
+    "django_filters"
 ]
 
 LOCAL_APPS = [
