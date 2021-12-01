@@ -1,8 +1,8 @@
 from django.core.checks import messages
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.decorators.http import require_POST
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.http import require_POST
 
 from birzum.apps.products.models import Product
 
@@ -15,21 +15,17 @@ def cart_add(request, id):
     fail_message = _("Mahsulot sotuvda qolmagan!")
 
     cart = Cart(request)
-    count = request.GET.get('count')
+    count = request.GET.get('count', 1)
     obj = Product.objects.filter(available=True, id=id).first()
 
     # agar product bor bo'lsa get parametrdan uni countini tekshirib ko'ramiz
     if obj:
-        try:
-            count = int(count)
-        except:
-            count = 1
-
+        print("Cartaga qoshildi")
         # tekshiruv tugagandan song cartaga mahsulotni qo'shib yuboramiz
-        cart.add(product=obj, quantity=count, update_quantity=False)
-        
-        return JsonResponse({"success": True, "message": success_message}, safe=False)
+        cart.add(product=obj, quantity=int(count))
 
+        return JsonResponse({"success": True, "message": success_message, 'count': count}, safe=False)
+    print("qoshilmadi")
     return JsonResponse({"success": False, "message": fail_message}, safe=False)
 
 
@@ -48,6 +44,28 @@ def cart_clear(request):
 
 def cart_detail(request):
     cart = Cart(request)
-    print("#############################")
-    print(cart.cart)
-    return render(request, 'cart/cart.html')
+    print("THis ios a cart total price", cart.get_total_price())
+    print([cart.cart[item]['price'] for item in cart.cart.keys()])
+    return render(request, 'cart/cart.html', {'cart': cart})
+
+
+def update(request):
+    cart = Cart(request)
+    count = request.GET.get('quantity')
+    id = int(request.GET.get('id'))
+
+    obj = Product.objects.filter(available=True, id=id).first()
+
+    if obj:
+        if obj.id in [int(item) for item in cart.cart.keys()]:
+            cart.cart[str(obj.id)]['quantity'] = int(count)
+            cart.cart[str(obj.id)]['price'] = str(obj.price * int(count))
+            cart.save()
+            data = {'product_price': obj.price * int(count), "total_price": cart.get_total_price()}
+            return JsonResponse(data)
+        else:
+            cart.add(product=obj, quantity=int(count))
+            data = {'product_price': obj.price * int(count), "total_price": cart.get_total_price()}
+            return JsonResponse(data)
+
+    return JsonResponse({"success": False})

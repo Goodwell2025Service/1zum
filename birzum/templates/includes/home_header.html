@@ -1,4 +1,4 @@
-{% load static i18n mptt_tags %}
+{% load static i18n mptt_tags thumbnail %}
 
 <header class="header">
     <div class="header-top">
@@ -35,14 +35,14 @@
                 <!-- End of Dropdown Menu -->
                 <span class="divider d-lg-show"></span>
                 <a href="{% url 'blog:list' %}" class="d-lg-show">{% trans "Blog" %}</a>
-                <a href="{% url 'contact' %}" class="d-lg-show">{% trans "Biz bilan bog'laning" %}</a>
+                <a href="{% url 'company:contact' %}" class="d-lg-show">{% trans "Biz bilan bog'laning" %}</a>
                 {% if user.is_authenticated %}
                 <a href="{% url 'users:detail' user.username %}" class="d-lg-show">{% trans "Mening profilim" %}</a>
                 {% endif %}
                 <a href="/accounts/login" class="d-lg-show login"><i
                         class="w-icon-account"></i>{% trans "Kirish" %}</a>
                 <span class="delimiter d-lg-show">/</span>
-                <a href="/accounts/signup" class="ml-0 d-lg-show login">{% trans "Ro'yhatdan o'tish" %}</a>
+                <a href="{{ get_language_code }}/accounts/signup" class="ml-0 d-lg-show login">{% trans "Ro'yhatdan o'tish" %}</a>
             </div>
         </div>
     </div>
@@ -53,22 +53,16 @@
             <div class="header-left mr-md-4">
                 <a href="#" class="mobile-menu-toggle w-icon-hamburger" aria-label="menu-toggle">
                 </a>
-                <a href="/" class="logo ml-lg-0">
-                    <img src="{% static 'images/logo.png' %}" alt="logo" width="144" height="45" />
+                <a href="{% url 'home' %}" class="logo ml-lg-0">
+                    <img src="{% static 'images/logo.png' %}" alt="{% trans "1zum logo" %}" width="144" height="45" />
                 </a>
                 <form method="get" action="#" class="input-wrapper header-search hs-expanded hs-round d-none d-md-flex">
                     <div class="select-box">
                         <select id="category" name="category">
-                            <option value="">{% trans "Barcha kategoriyalar" %}</option>
-                            <option value="4">Fashion</option>
-                            <option value="5">Furniture</option>
-                            <option value="6">Shoes</option>
-                            <option value="7">Sports</option>
-                            <option value="8">Games</option>
-                            <option value="9">Computers</option>
-                            <option value="10">Electronics</option>
-                            <option value="11">Kitchen</option>
-                            <option value="12">Clothing</option>
+                            <option value="0">{% trans "Barchasi" %}</option>
+                            {% recursetree categories %}
+                            <option value="{{ node.id }}">{{ node.name }}</option>
+                            {% endrecursetree %}
                         </select>
                     </div>
                     <input type="text" class="form-control" name="search" id="search"
@@ -83,7 +77,7 @@
                     <div class="call-info d-lg-show">
                         <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
                             <a href="mailto:#" class="text-capitalize">{% trans "Bog'lanish" %}</a> :</h4>
-                        <a href="tel:#" class="phone-number font-weight-bolder ls-50">0(800)123-456</a>
+                        <a href="tel:#" class="phone-number font-weight-bolder ls-50">+998906676625</a>
                     </div>
                 </div>
                 <a class="wishlist label-down link d-xs-show" href="{% url 'whishlist:whishlist' %}">
@@ -96,9 +90,9 @@
                 </a>
                 <div class="dropdown cart-dropdown cart-offcanvas mr-0 mr-lg-2">
                     <div class="cart-overlay"></div>
-                    <a href="#" class="cart-toggle label-down link">
+                    <a href="{% url 'cart:detail' %}" class="cart-toggle label-down link">
                         <i class="w-icon-cart">
-                            <span class="cart-count">2</span>
+                            <span class="cart-count" id="header-cart">{{ cart|length }}</span>
                         </i>
                         <span class="cart-label">{% trans "Savat" %}</span>
                     </a>
@@ -109,57 +103,41 @@
                         </div>
 
                         <div class="products">
+                            {% for item in cart %}
+                            {% with product=item.product %}
                             <div class="product product-cart">
                                 <div class="product-detail">
-                                    <a href="product-default.html" class="product-name">Beige knitted
-                                        elas<br>tic
-                                        runner shoes</a>
+                                    <a href="product-default.html" class="product-name">{{ product.title }}</a>
                                     <div class="price-box">
-                                        <span class="product-quantity">1</span>
-                                        <span class="product-price">$25.68</span>
+                                        <span class="product-quantity">{{ item.quantity }}</span>
+                                        <span class="product-price">{{ item.price }} UZS</span>
                                     </div>
                                 </div>
                                 <figure class="product-media">
                                     <a href="product-default.html">
-                                        <img src="{% static '' %}" alt="product" height="84"
-                                            width="94" />
+                                        {% thumbnail product.get_first_image "80x80" crop="center" as im %}
+                                        <img src="{{ im.url }}" alt="product" height="{{im.height}}" width="{{im.width}}"/>
+                                        {% endthumbnail %}
                                     </a>
                                 </figure>
                                 <button class="btn btn-link btn-close" aria-label="button">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
-
-                            <div class="product product-cart">
-                                <div class="product-detail">
-                                    <a href="product-default.html" class="product-name">Blue utility
-                                        pina<br>fore
-                                        denim dress</a>
-                                    <div class="price-box">
-                                        <span class="product-quantity">1</span>
-                                        <span class="product-price">$32.99</span>
-                                    </div>
-                                </div>
-                                <figure class="product-media">
-                                    <a href="product-default.html">
-                                        <img src="{% static 'images/cart/product-2.jpg' %}" alt="product" width="84"
-                                            height="94" />
-                                    </a>
-                                </figure>
-                                <button class="btn btn-link btn-close" aria-label="button">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
+                            {% endwith %}
+                            {% endfor %}
+                            
                         </div>
 
                         <div class="cart-total">
-                            <label>Subtotal:</label>
-                            <span class="price">$58.67</span>
+                            <label>{% trans "Umumiy" %}:</label>
+                            {% if cart|length > 0 %}
+                            <span class="price">{{ cart.get_total_price }} UZS</span>
+                            {% endif %}
                         </div>
 
                         <div class="cart-action">
-                            <a href="{% url 'cart:detail' %}" class="btn btn-dark btn-outline btn-rounded">{% trans "Kartani ko'rsatish" %}</a>
-                            <a href="checkout.html" class="btn btn-primary  btn-rounded">{% trans "Rasmiylashtirish" %}</a>
+                            <a href="{% url 'cart:detail' %}" class="btn btn-dark btn-outline btn-rounded">{% trans "Savat" %}</a>
                         </div>
                     </div>
                     <!-- End of Dropdown Box -->
@@ -184,10 +162,19 @@
 
                         <div class="dropdown-box mt-0">
                             <ul class="menu vertical-menu category-menu bg-white text-default">
+                                <li>
+                                    
+                                    <a href="{% url 'products:list' %}" class="d-flex align-items-center">
+                                        <i class="w-icon-grid mr-2"></i>
+                                        {% trans "Barcha mahsulotlar" %}
+                                    </a>
+                                </li>
                                 {% recursetree categories %}
                                 <li>
                                     <a href="{{ node.get_absolute_url }}">
-                                        
+                                        {% if node.logo %}
+                                        <img src="{{ node.logo.url }}" width="20px" class="mr-1">
+                                        {% endif %}
                                         {{ node.name }}
                                     </a>
                                     {% if not node.is_leaf_node %}
@@ -203,7 +190,7 @@
                     <nav class="main-nav ml-4">
                         <ul class="menu">
                             <li>
-                                <a href="{% url 'about' %}">{% trans "Biz haqimizda" %}</a>
+                                <a href="{% url 'company:about' %}">{% trans "Biz haqimizda" %}</a>
                             </li>
                             <li>
                                 <a href="{% url 'products:list' %}?discounts">{% trans "Chegirmalar" %}</a>
@@ -221,15 +208,15 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{% url 'contact' %}">{% trans "Kontaktlar / EKSS" %}</a>
+                                <a href="{% url 'company:contact' %}">{% trans "Kontaktlar / EKSS" %}</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
-                <div class="header-right">
+                {% comment %} <div class="header-right">
                     <a href="#" class="d-xl-show"><i class="w-icon-map-marker mr-1"></i>{% trans "Buyurtmani kuzatish" %}</a>
                     <a href="#"><i class="w-icon-sale"></i>{% trans "Kunlik ulashuvlar" %}</a>
-                </div>
+                </div> {% endcomment %}
             </div>
         </div>
     </div>

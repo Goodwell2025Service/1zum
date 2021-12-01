@@ -1,23 +1,16 @@
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
-from django.conf.urls.i18n import i18n_patterns
-
 
 from birzum.homeviews import HomeView
 
 urlpatterns = (
     i18n_patterns(
         path("", HomeView.as_view(), name="home"),
-        path(
-            "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
-        ),
-        path(
-            "contact/", TemplateView.as_view(template_name="pages/contact.html"), name="contact"
-        ),
         # Django Admin, use {% url 'admin:index' %}
         path(settings.ADMIN_URL, admin.site.urls),
         # User management
@@ -25,11 +18,13 @@ urlpatterns = (
         path("accounts/", include("allauth.urls")),
         path('ckeditor/', include('ckeditor_uploader.urls')),
         # Your stuff: custom urls includes go here
-        path("", include('birzum.apps.products.urls', namespace="products")),
         path("cart/", include('birzum.apps.cart.urls', namespace='cart')),
         path("blog/", include('birzum.apps.blog.urls', namespace='blog')),
         path("whishlist/", include('birzum.apps.smallapps.whishlist.urls', namespace='whishlist')),
         path("compare/", include('birzum.apps.smallapps.compare.urls', namespace='compare')),
+        path("company/", include('birzum.apps.smallapps.company.urls', namespace='company')),
+        path("order/", include('birzum.apps.order.urls', namespace='order')),
+        path("", include('birzum.apps.products.urls', namespace="products")),
     ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
 

@@ -570,17 +570,17 @@ window.Wolmart = {};
             e && setTimeout(this.refreshSize.bind(this), 50);
         }
 
-        StickyContent.prototype.wrap = function () {
+        .prototype.wrap = function () {
             this.$el.wrap('<div class="sticky-content-wrapper"></div>');
             this.isWrap = true;
         }
 
-        StickyContent.prototype.unwrap = function () {
+        .prototype.unwrap = function () {
             this.$el.unwrap('.sticky-content-wrapper');
             this.isWrap = false;
         }
 
-        StickyContent.prototype.refresh = function (e, data) {
+        .prototype.refresh = function (e, data) {
             var pageYOffset = window.pageYOffset + data.offsetTop;
             var $el = this.$el;
 
@@ -2510,7 +2510,7 @@ window.Wolmart = {};
     // Public Members
     QuantityInput.min = 1;
     QuantityInput.max = 1000000;
-    QuantityInput.value = 1;
+    QuantityInput.value = $("#hidden-qty").val();
 
     QuantityInput.prototype.init = function ($el) {
         var self = this;
@@ -2533,7 +2533,7 @@ window.Wolmart = {};
         self.max || ($el.attr('max', self.max = QuantityInput.max));
 
         // Add DOM elements and event listeners
-        self.$value = $el.val(self.value = QuantityInput.value);
+        // self.$value = $el.val(self.value = QuantityInput.value);
 
         self.$minus = $el.parent().find('.quantity-minus')
             .on('mousedown', function (e) {
