@@ -35,14 +35,14 @@
                 <!-- End of Dropdown Menu -->
                 <span class="divider d-lg-show"></span>
                 <a href="{% url 'blog:list' %}" class="d-lg-show">{% trans "Blog" %}</a>
-                <a href="{% url 'contact' %}" class="d-lg-show">{% trans "Biz bilan bog'laning" %}</a>
+                <a href="{% url 'company:contact' %}" class="d-lg-show">{% trans "Biz bilan bog'laning" %}</a>
                 {% if user.is_authenticated %}
                 <a href="{% url 'users:detail' user.username %}" class="d-lg-show">{% trans "Mening profilim" %}</a>
                 {% endif %}
                 <a href="/accounts/login" class="d-lg-show login"><i
                         class="w-icon-account"></i>{% trans "Kirish" %}</a>
                 <span class="delimiter d-lg-show">/</span>
-                <a href="/accounts/signup" class="ml-0 d-lg-show login">{% trans "Ro'yhatdan o'tish" %}</a>
+                <a href="{{ get_language_code }}/accounts/signup" class="ml-0 d-lg-show login">{% trans "Ro'yhatdan o'tish" %}</a>
             </div>
         </div>
     </div>
@@ -53,22 +53,16 @@
             <div class="header-left mr-md-4">
                 <a href="#" class="mobile-menu-toggle w-icon-hamburger" aria-label="menu-toggle">
                 </a>
-                <a href="/" class="logo ml-lg-0">
-                    <img src="{% static 'images/logo.png' %}" alt="logo" width="144" height="45" />
+                <a href="{% url 'home' %}" class="logo ml-lg-0">
+                    <img src="{% static 'images/logo.png' %}" alt="{% trans "1zum logo" %}" width="144" height="45" />
                 </a>
                 <form method="get" action="#" class="input-wrapper header-search hs-expanded hs-round d-none d-md-flex">
                     <div class="select-box">
                         <select id="category" name="category">
-                            <option value="">{% trans "Barcha kategoriyalar" %}</option>
-                            <option value="4">Fashion</option>
-                            <option value="5">Furniture</option>
-                            <option value="6">Shoes</option>
-                            <option value="7">Sports</option>
-                            <option value="8">Games</option>
-                            <option value="9">Computers</option>
-                            <option value="10">Electronics</option>
-                            <option value="11">Kitchen</option>
-                            <option value="12">Clothing</option>
+                            <option value="0">{% trans "Barchasi" %}</option>
+                            {% recursetree categories %}
+                            <option value="{{ node.id }}">{{ node.name }}</option>
+                            {% endrecursetree %}'
                         </select>
                     </div>
                     <input type="text" class="form-control" name="search" id="search"
@@ -98,7 +92,7 @@
                     <div class="cart-overlay"></div>
                     <a href="{% url 'cart:detail' %}" class="cart-toggle label-down link">
                         <i class="w-icon-cart">
-                            <span class="cart-count">{{ cart|length }}</span>
+                            <span class="cart-count" id="header-cart">{{ cart|length }}</span>
                         </i>
                         <span class="cart-label">{% trans "Savat" %}</span>
                     </a>
@@ -113,14 +107,14 @@
                             {% with product=item.product %}
                             <div class="product product-cart">
                                 <div class="product-detail">
-                                    <a href="product-default.html" class="product-name">{{ product.title }}</a>
+                                    <a href="#" class="product-name">{{ product.title }}</a>
                                     <div class="price-box">
                                         <span class="product-quantity">{{ item.quantity }}</span>
                                         <span class="product-price">{{ item.price }} UZS</span>
                                     </div>
                                 </div>
                                 <figure class="product-media">
-                                    <a href="product-default.html">
+                                    <a href="#">
                                         {% thumbnail product.get_first_image "80x80" crop="center" as im %}
                                         <img src="{{ im.url }}" alt="product" height="{{im.height}}" width="{{im.width}}"/>
                                         {% endthumbnail %}
@@ -168,10 +162,19 @@
 
                         <div class="dropdown-box mt-0">
                             <ul class="menu vertical-menu category-menu bg-white text-default">
+                                <li>
+                                    
+                                    <a href="{% url 'products:list' %}" class="d-flex align-items-center">
+                                        <i class="w-icon-grid mr-2"></i>
+                                        {% trans "Barcha mahsulotlar" %}
+                                    </a>
+                                </li>
                                 {% recursetree categories %}
                                 <li>
                                     <a href="{{ node.get_absolute_url }}">
-                                        
+                                        {% if node.logo %}
+                                        <img src="{{ node.logo.url }}" width="20px" class="mr-1">
+                                        {% endif %}
                                         {{ node.name }}
                                     </a>
                                     {% if not node.is_leaf_node %}
@@ -187,7 +190,7 @@
                     <nav class="main-nav ml-4">
                         <ul class="menu">
                             <li>
-                                <a href="{% url 'about' %}">{% trans "Biz haqimizda" %}</a>
+                                <a href="{% url 'company:about' %}">{% trans "Biz haqimizda" %}</a>
                             </li>
                             <li>
                                 <a href="{% url 'products:list' %}?discounts">{% trans "Chegirmalar" %}</a>
@@ -198,22 +201,22 @@
                             <li>
                                 <a href="#">{% trans "Yo'riqnomalar" %}</a>
                                 <ul>
-                                    <li><a href="element-accordions.html">{% trans "Yetkazib berish" %}</a></li>
-                                    <li><a href="element-alerts.html">{% trans "Mahsulotni qaytarib olish yoki almashtirish" %}</a></li>
-                                    <li><a href="element-blog-posts.html">{% trans "Variantga olish shartlari" %}</a></li>
-                                    <li><a href="element-buttons.html">{% trans "Publichnaya" %}</a></li>
+                                    <li><a href="#">{% trans "Yetkazib berish" %}</a></li>
+                                    <li><a href="#">{% trans "Mahsulotni qaytarib olish yoki almashtirish" %}</a></li>
+                                    <li><a href="#">{% trans "Variantga olish shartlari" %}</a></li>
+                                    <li><a href="#">{% trans "Publichnaya" %}</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="{% url 'contact' %}">{% trans "Kontaktlar / EKSS" %}</a>
+                                <a href="{% url 'company:contact' %}">{% trans "Kontaktlar / EKSS" %}</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
-                <div class="header-right">
+                {% comment %} <div class="header-right">
                     <a href="#" class="d-xl-show"><i class="w-icon-map-marker mr-1"></i>{% trans "Buyurtmani kuzatish" %}</a>
                     <a href="#"><i class="w-icon-sale"></i>{% trans "Kunlik ulashuvlar" %}</a>
-                </div>
+                </div> {% endcomment %}
             </div>
         </div>
     </div>
