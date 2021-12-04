@@ -115,7 +115,8 @@ THIRD_PARTY_APPS = [
     "mptt",
     "ckeditor",
     "sorl.thumbnail",
-    "django_filters"
+    "django_filters",
+    "rosetta"
 ]
 
 LOCAL_APPS = [
