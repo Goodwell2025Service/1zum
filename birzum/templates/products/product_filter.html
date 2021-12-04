@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+	
 {% load static i18n thumbnail %}
 
 {% block content %}
@@ -255,7 +255,7 @@
                                     <a href="{{ p.get_absolute_url }}">
                                     {% thumbnail p.get_first_image "268x268" crop="center" as im %}
                                         <img src="{{ im.url }}" alt="{{ p.name }}" width="{{im.width}}"
-                                            height="im.height"/>
+                                            height="{{ im.height }}"/>
                                     {% endthumbnail %}
                                     </a>
                                     <div class="product-action-horizontal">
