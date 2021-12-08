@@ -116,7 +116,11 @@ THIRD_PARTY_APPS = [
     "mptt",
     "ckeditor",
     "sorl.thumbnail",
-    "django_filters"
+    "django_filters",
+    "rosetta",
+    'hijack',
+    'compat',
+    'hijack_admin'
 ]
 
 LOCAL_APPS = [
@@ -127,7 +131,8 @@ LOCAL_APPS = [
     "birzum.apps.smallapps.compare.apps.CompareConfig",
     "birzum.apps.smallapps.company.apps.CompanyConfig",
     "birzum.apps.smallapps.whishlist.apps.WhishlistConfig",
-    "birzum.apps.smallapps.manuals.apps.ManualsConfig"
+    "birzum.apps.smallapps.manuals.apps.ManualsConfig",
+    "birzum.apps.smallapps.reklama.apps.ReklamaConfig"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -336,6 +341,20 @@ CKEDITOR_FILENAME_GENERATOR = 'config.utils.get_filename'
 # -------------telegram notify----------------
 TELEGRAM_GROUP_ID = get_secret('TELEGRAM_GROUP_ID', "")
 TELEGRAM_NOTIFY_BOT_ID = get_secret('TELEGRAM_NOTIFY_BOT_ID', '')
+
+# ---------------------------------------------
+# rosetta options
+ROSETTA_SHOW_AT_ADMIN_PANEL = True
+
+# ----------------------------------------------
+# hijack configs
+HIJACK_LOGOUT_REDIRECT_URL = "/ru/1M81ioxmGOqSvt5nMAw85SD/users/user/"
+HIJACK_LOGIN_REDIRECT_URL = '/'
+HIJACK_ALLOW_GET_REQUESTS = True
+HIJACK_REGISTER_ADMIN = False
+
+HIJACK_USE_BOOTSTRAP = True
+
 
 
 CKEDITOR_CONFIGS = {
