@@ -8,13 +8,18 @@ from django.views.generic import TemplateView
 
 from birzum.homeviews import HomeView
 
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
 urlpatterns = (
     i18n_patterns(
         path("", HomeView.as_view(), name="home"),
         # Django Admin, use {% url 'admin:index' %}
         path(settings.ADMIN_URL, admin.site.urls),
         path("translations/", include("rosetta.urls")),
-        # path("hijack", include('hijack.urls', namespace='hijack')),
+        path('sentry-debug/', trigger_error),
+        path("hijack", include('hijack.urls', namespace='hijack')),
         # User management
         path("users/", include("birzum.users.urls", namespace="users")),
         path("accounts/", include("allauth.urls")),
@@ -29,6 +34,7 @@ urlpatterns = (
         path("", include('birzum.apps.products.urls', namespace="products")),
     ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
+
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
