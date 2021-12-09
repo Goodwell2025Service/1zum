@@ -2,8 +2,6 @@
 	
 {% load static i18n thumbnail %}
 
-{% load humanize %}
-
 {% block content %}
 
 {% include 'includes/home_header.html' %}
@@ -64,11 +62,7 @@
                         {% for cat in categories %}
                         <div class="swiper-slide">
                             <figure>
-                                <a href="{{ cat.get_absolute_url }}">
-                                    {% if cat.logo %}
-                                        <img src="{{ cat.logo.url }}" alt="{{ cat.name }}">
-                                    {% endif %}
-                                </a>
+                                <img src="{% static 'images/brands/category/1.png' %}" alt="Brand" width="160" height="90" />
                             </figure>
                         </div>
                         {% endfor %}
@@ -280,7 +274,7 @@
                                         <a href="{{ p.category.get_absolute_url }}">{{ p.category.name }}</a>
                                     </div>
                                     <h3 class="product-name">
-                                        <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>
+                                        <a href="{{ p.get_absolute_url }}">{{ p.name }}</a>
                                     </h3>
                                     <div class="ratings-container">
                                         <div class="ratings-full">
@@ -291,7 +285,7 @@
                                     </div>
                                     <div class="product-pa-wrapper">
                                         <div class="product-price">
-                                            {{ p.price|intcomma }}
+                                            {{ p.price }}
                                         </div>
                                     </div>
                                 </div>
