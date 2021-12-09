@@ -117,9 +117,9 @@ THIRD_PARTY_APPS = [
     "sorl.thumbnail",
     "django_filters",
     "rosetta",
-    'hijack',
-    'compat',
-    'hijack_admin'
+    # 'hijack',
+    # 'compat',
+    # 'hijack_admin'
 ]
 
 LOCAL_APPS = [
