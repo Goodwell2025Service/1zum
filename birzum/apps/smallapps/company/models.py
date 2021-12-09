@@ -129,4 +129,3 @@ class Message(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse("company:contact")
-    
