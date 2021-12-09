@@ -22,6 +22,7 @@ class Brand(models.Model):
         return self.name
 
 
+
 class Category(MPTTModel):
     name = models.CharField(_("Category"), max_length=255)
     slug = models.SlugField(_("Slug"), max_length=255, unique=True)
