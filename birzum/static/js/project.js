@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('.btn-cart').off().on('click', function(e){
         e.preventDefault();
         let count = $('.qty').val()
-        console.log('clicked', count, $('.cart-count'))
+        // console.log('clicked', count, $('.cart-count'))
         $.ajax({
             method: "GET",
             url: $(this).attr("href"),
@@ -13,8 +13,13 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (data) {
                 if (data.success) {
-                    console.log('count')
+                    console.log(data.message)
                     $('#header-cart').text(data.count)
+                    $('#success_msg').text(data.message)
+                } else {
+                    console.log(data.message)
+                    $('#success_msg').text(data.message)
+                    $('#success_msg').css('color', 'red')
                 }
             }
         });
@@ -103,4 +108,5 @@ $(document).ready(function() {
 
 })
 
+// https://app.slack.com/client/T02PM4HGUUX/C02Q41YLH2Q
 

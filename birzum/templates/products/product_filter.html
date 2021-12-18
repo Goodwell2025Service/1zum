@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+	
 {% load static i18n thumbnail %}
 
 {% block content %}
@@ -255,7 +255,7 @@
                                     <a href="{{ p.get_absolute_url }}">
                                     {% thumbnail p.get_first_image "268x268" crop="center" as im %}
                                         <img src="{{ im.url }}" alt="{{ p.name }}" width="{{im.width}}"
-                                            height="im.height"/>
+                                            height="{{ im.height }}"/>
                                     {% endthumbnail %}
                                     </a>
                                     <div class="product-action-horizontal">
@@ -271,17 +271,17 @@
                                 </figure>
                                 <div class="product-details">
                                     <div class="product-cat">
-                                        <a href="shop-banner-sidebar.html">{{ p.category.name }}</a>
+                                        <a href="{{ p.category.get_absolute_url }}">{{ p.category.name }}</a>
                                     </div>
                                     <h3 class="product-name">
-                                        <a href="product-default.html">{{ p.name }}</a>
+                                        <a href="{{ p.get_absolute_url }}">{{ p.name }}</a>
                                     </h3>
                                     <div class="ratings-container">
                                         <div class="ratings-full">
                                             <span class="ratings" style="width: 100%;"></span>
                                             <span class="tooltiptext tooltip-top"></span>
                                         </div>
-                                        <a href="product-default.html" class="rating-reviews">(3 reviews)</a>
+                                        <a href="{{ p.get_absolute_url }}" class="rating-reviews">(3 reviews)</a>
                                     </div>
                                     <div class="product-pa-wrapper">
                                         <div class="product-price">

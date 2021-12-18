@@ -1,4 +1,4 @@
-{% load static i18n mptt_tags thumbnail %}
+{% load static i18n mptt_tags thumbnail custom_tags %}
 
 <header class="header">
     <div class="header-top">
@@ -7,29 +7,23 @@
                 <p class="welcome-msg">{% trans "1zum do'koniga xush kelibsiz!" %}</p>
             </div>
             <div class="header-right">
-                {% comment %} <div class="dropdown">
-                    <a href="#currency">USD</a>
-                    <div class="dropdown-box">
-                        <a href="#USD">USD</a>
-                        <a href="#EUR">EUR</a>
-                    </div>
-                </div> {% endcomment %}
-                <!-- End of DropDown Menu -->
+                {% get_available_languages as LANGUAGES %}
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_language_info_list for LANGUAGES as languages %}
 
                 <div class="dropdown">
-                    <a href="#language"><img src="{% static 'images/flags/eng.png' %}" alt="ENG Flag" width="14"
-                            height="8" class="dropdown-image" /> ENG</a>
+                    <a href="#language"><img src="{% static "images/icons/"|addstr:LANGUAGE_CODE|addstr:'.png' %}" alt="ENG Flag" width="14"
+                            height="8" class="dropdown-image" /> {{ LANGUAGE_CODE|upper }}</a>
                     <div class="dropdown-box">
-                        <a href="#ENG">
-                            <img src="{% static 'images/flags/eng.png' %}" alt="ENG Flag" width="14" height="8"
+                        {% for language in languages %}
+                        {% if not language.code == LANGUAGE_CODE %}
+                        <a href="/{{ language.code }}/{{ request.get_full_path|slice:"4:" }}" class="lang-switcher">
+                            <img src="{% static "images/icons/"|addstr:language.code|addstr:'.png' %}" alt="{{ language.code }} Flag" width="14" height="8"
                                 class="dropdown-image" />
-                            ENG
+                            {{ language.code|upper }}
                         </a>
-                        <a href="#FRA">
-                            <img src="{% static 'images/flags/fra.png' %}" alt="FRA Flag" width="14" height="8"
-                                class="dropdown-image" />
-                            FRA
-                        </a>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <!-- End of Dropdown Menu -->
@@ -77,7 +71,7 @@
                     <div class="call-info d-lg-show">
                         <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
                             <a href="mailto:#" class="text-capitalize">{% trans "Bog'lanish" %}</a> :</h4>
-                        <a href="tel:#" class="phone-number font-weight-bolder ls-50">+998906676625</a>
+                        <a href="tel:#" class="phone-number font-weight-bolder ls-50">+998 94 668 05 06</a>
                     </div>
                 </div>
                 <a class="wishlist label-down link d-xs-show" href="{% url 'whishlist:whishlist' %}">

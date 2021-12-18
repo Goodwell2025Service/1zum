@@ -110,6 +110,7 @@ class Product(TimeStampedModel):
     )
 
     class Meta:
+        ordering = ('created',)
         verbose_name = _("mahsulot")
         verbose_name_plural = _("Mahsulotlar")
 
@@ -117,7 +118,10 @@ class Product(TimeStampedModel):
         return self.title
 
     def get_first_image(self):
-        return self.image.first().image
+        first_image = self.image.first()
+        if first_image:
+            return first_image.image
+        return None
 
     def get_price(self):
         return self.price
