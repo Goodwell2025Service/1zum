@@ -259,14 +259,14 @@
                                     {% endthumbnail %}
                                     </a>
                                     <div class="product-action-horizontal">
-                                        <a href="{% url 'cart:add' id=p.id %}" class="btn-product-icon btn-cart w-icon-cart"
+                                        <a href="{% url 'cart:add' id=p.id %}" class="btn-product-icon btn-cart w-icon-cart {% if p.id|stringformat:'i' in cart.cart.keys %}text-primary{% endif %}"
                                             title="Add to cart"></a>
-                                        <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                        <a href="{% url 'whishlist:add' id=p.id %}" class="btn-product-icon btn-wishlist w-icon-heart"
                                             title="Wishlist"></a>
-                                        <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                                        <a href="{% url 'compare:add' id=p.id %}" class="btn-product-icon btn-compare w-icon-compare {% if p.id|stringformat:'i' in cart.cart.keys %}text-primary{% else %}{% endif %}"
                                             title="Compare"></a>
-                                        {% comment %} <a href="#" class="btn-product-icon btn-quickview w-icon-search"
-                                            title="Quick View"></a> {% endcomment %}
+                                        <!-- <a href="{% url 'whishlist:add' id=p.id %}" class="btn-product-icon btn-quickview w-icon-search"
+                                            title="Quick View"></a> -->
                                     </div>
                                 </figure>
                                 <div class="product-details">
@@ -274,7 +274,8 @@
                                         <a href="{{ p.category.get_absolute_url }}">{{ p.category.name }}</a>
                                     </div>
                                     <h3 class="product-name">
-                                        <a href="{{ p.get_absolute_url }}">{{ p.name }}</a>
+                                        <a href="{{ p.get_absolute_url }}">{{ p.title }}
+                                        </a>
                                     </h3>
                                     <div class="ratings-container">
                                         <div class="ratings-full">
