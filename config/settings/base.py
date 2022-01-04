@@ -132,7 +132,8 @@ LOCAL_APPS = [
     "birzum.apps.smallapps.company.apps.CompanyConfig",
     "birzum.apps.smallapps.whishlist.apps.WhishlistConfig",
     "birzum.apps.smallapps.manuals.apps.ManualsConfig",
-    "birzum.apps.smallapps.reklama.apps.ReklamaConfig"
+    "birzum.apps.smallapps.reklama.apps.ReklamaConfig",
+    "birzum.apps.smallapps.rating.apps.RatingConfig"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -343,8 +344,8 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_FILENAME_GENERATOR = 'config.utils.get_filename'
 
 # -------------telegram notify----------------
-TELEGRAM_GROUP_ID = get_secret('TELEGRAM_GROUP_ID', "")
-TELEGRAM_NOTIFY_BOT_ID = get_secret('TELEGRAM_NOTIFY_BOT_ID', '')
+TELEGRAM_CHAT_ID = get_secret('TELEGRAM_CHAT_ID', "")
+TELEGRAM_BOT_TOKEN = get_secret('TELEGRAM_BOT_TOKEN', '')
 
 # ---------------------------------------------
 # rosetta options
