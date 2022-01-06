@@ -1,5 +1,7 @@
 from django import template
 
+from birzum.apps.smallapps.rating.models import Currency
+
 register = template.Library()
 
 
@@ -15,3 +17,12 @@ def get_banner_info(info):
         "red": info.split(" ")[0],
         "black": " ".join(info.split(" ")[1:]), 
     }
+
+
+@register.filter(name="sum")
+def do_sum(number):
+    price = Currency.objects.all().last()
+    try:
+        return int((float(price.currency) * float(number)))
+    except:
+        return number
