@@ -55,15 +55,15 @@
                 </div>
                 <!-- End of Compare Products -->
                 <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-price">
-                    <div class="compare-col compare-field">Price</div>
+                    <div class="compare-col compare-field">{% trans "Narx" %}</div>
                     {% for item in products %}
                     <div class="compare-col compare-value">
                         <div class="product-price">
                             {% if item.discount %}
-                            <span class="new-price">{{ item.discount_price_sum|floatformat:-2|intcomma }} UZS</span>
-                            <span class="old-price">{{ item.price_sum|floatformat:-2|intcomma }} UZS</span>
+                            <span class="new-price">{{ item.discount_price|sum|floatformat:-2|intcomma }} UZS</span>
+                            <span class="old-price">{{ item.price|sum|floatformat:-2|intcomma }} UZS</span>
                             {% else %}
-                            <span class="new-price">{{ item.price_sum|floatformat:-2|intcomma }} UZS</span>
+                            <span class="new-price">{{ item.price|sum|floatformat:-2|intcomma }} UZS</span>
                             {% endif %}
                         </div>
                     </div>
