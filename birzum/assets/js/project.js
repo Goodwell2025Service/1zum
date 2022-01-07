@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('.btn-cart').off().on('click', function(e){
         e.preventDefault();
         let count = $('.qty').val()
-        console.log('clicked', count, $('.cart-count'))
+        // console.log('clicked', count, $('.cart-count'))
         $.ajax({
             method: "GET",
             url: $(this).attr("href"),
@@ -13,8 +13,13 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (data) {
                 if (data.success) {
-                    console.log('count')
+                    console.log(data.message)
                     $('#header-cart').text(data.count)
+                    $('#success_msg').text(data.message)
+                } else {
+                    console.log(data.message)
+                    $('#success_msg').text(data.message)
+                    $('#success_msg').css('color', 'red')
                 }
             }
         });
@@ -101,6 +106,50 @@ $(document).ready(function() {
         $("#left-filter").submit();
     })
 
+    // function manipulating the compare functionality
+    $('.btn-compare').off().on('click', function(e){
+        e.preventDefault();
+        let count = $('.qty').val()
+        let compare_link = $(this).attr("href")
+        // console.log('clicked', count, $('.cart-count'))
+        $.ajax({
+            method: "GET",
+            url: $(this).attr("href"),
+            data: {'count': count},
+            dataType: 'json',
+            success: function (data) {
+                if (data.success) {
+                    console.log(data.message)
+                    $('#success_msg').text(data.message)
+                    $(this).removeClass('w-icon-compare')
+                } else {
+                    console.log(data.message)
+                    $('#success_msg').text(data.message)
+                }
+            }
+        });
+    })
+
+    // function manipulating the whishlist functionality
+    $('.btn-wishlist').off().on('click', function(e){
+        e.preventDefault();
+        console.log("Bosildi")
+        $.ajax({
+            method: "GET",
+            url: $(this).attr("href"),
+            data: {'data': 1},
+            dataType: 'json',
+            success: function (data) {
+                if (data.success) {
+                    console.log("Success boldi")
+                } else {
+                    console.log("Muammo boldi")
+                }
+            }
+        });
+    })
+
 })
 
+// https://app.slack.com/client/T02PM4HGUUX/C02Q41YLH2Q
 
