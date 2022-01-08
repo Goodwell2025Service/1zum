@@ -115,6 +115,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "mptt",
     "ckeditor",
+    "mathfilters",
     "sorl.thumbnail",
     "django_filters",
     "rosetta",
