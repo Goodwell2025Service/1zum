@@ -6,6 +6,7 @@ from birzum.apps.smallapps.company.models import Features
 from birzum.apps.smallapps.rating.models import Rating
 from .models import Category, Product, Brand
 from .filters import ProductFilter
+from .last_seen import Last
 # Create your views here.
 
 
@@ -14,7 +15,9 @@ class Home(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
+        last = Last(self.request)
         ctx['categories'] = Category.objects.select_related('parent').all()
+        ctx['last_seen'] = Product.objects.filter(id__in=last.box.keys()).prefetch_related('images')
         return ctx
 
 
@@ -61,7 +64,15 @@ class ProductDetail(DetailView):
         context["more"] = Product.objects.all().order_by('title')[:6]
         context["comments"] = Rating.objects.filter(
             product=self.object, published=True)
+        context['next'] = Product.items.get_next(id=self.object.id)
+        context['prev'] = Product.items.get_prev(id=self.object.id)
         return context
-    
+
+    def get_object(self, *args, **kwargs):
+        obj = super().get_object(*args, **kwargs)
+        last_seen = Last(self.request)
+        last_seen.add(product_id=obj.id)
+        return obj
+
 
 product_detail_view = ProductDetail.as_view()
