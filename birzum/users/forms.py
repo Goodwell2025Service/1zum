@@ -79,3 +79,4 @@ class BaseUserSignupForm(SignupForm):
                 "class": "form-control",
                 'autocomplete': 'new-password',
                 "placeholder": "********"})
+
